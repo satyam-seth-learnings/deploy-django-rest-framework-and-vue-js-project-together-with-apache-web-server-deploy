@@ -7,18 +7,24 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { ref, onMounted } from "vue";
 import axios from "axios";
+
+interface Student {
+  id: number;
+  stuname: string;
+  email: string;
+}
 
 export default {
   name: "App",
   setup() {
-    const students = ref([]);
+    const students = ref<Student[]>([]);
 
     const getAllStudents = async () => {
       try {
-        const response = await axios.get("http://backend.django-rest-framework-and-vue-js-project.com/api/student/");
+        const response = await axios.get<Student[]>("http://backend.django-rest-framework-and-vue-js-project.com/api/student/");
         students.value = response.data;
       } catch (error) {
         console.error(error);
